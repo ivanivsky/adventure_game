@@ -19,6 +19,7 @@ def intro_text():
     option_knock_or_cave_generic(item)
 
 def option_knock_or_cave_generic(item):
+    item = item
     print("Enter 1 to knock on the door of the house.")
     time.sleep(2)
     print("Enter 2 to peer into the cave.")
@@ -27,27 +28,21 @@ def option_knock_or_cave_generic(item):
     time.sleep(2)
     decision_knock_or_cave = int(input("(Please enter 1 or 2.)\n"))
 
-def option_knock_or_cave_dagger():
-    print("Enter 1 to knock on the door of the house.")
-    time.sleep(2)
-    print("Enter 2 to peer into the cave.")
-    time.sleep(2)
-    print("What would you like to do?")
-    time.sleep(2)
-    decision_knock_or_cave = int(input("(Please enter 1 or 2.)\n"))
+    decision_knock_or_cave_generic(item, decision_knock_or_cave)
 
-    decision_knock_or_cave_generic(decision_knock_or_cave)
-
-def decision_knock_or_cave_generic(decision_knock_or_cave):
-    if decision_knock_or_cave == 1:
+def decision_knock_or_cave_generic(item, decision):
+    if item == "dagger" and decision == 1:
         knock_dagger()
-        print("knock")
-    elif decision_knock_or_cave == 2:
+    elif item == "dagger" and decision == 2:
         cave_dagger()
-        print("cave")
+    elif item == "sword" and decision == 1:
+        knock_sword()
+    elif item == "sword" and decision == 2:
+        cave_sword()
     else:
-        input("What would like to do?")
-        # need to return to the options
+        print("Improper input")
+        # do something
+
 
 def cave_dagger():
     print("You peer cautiously into the cave.")
@@ -63,14 +58,14 @@ def cave_dagger():
 
     item = "sword"
 
-    cave_decision(item)
+    option_knock_or_cave_generic(item)
 
 def cave_sword():
     print("You peer cautiously into the cave.")
     print("You've been here before, and gotten all the good stuff. It's just an empty cave now.")
 
     item = "sword"
-    cave_decision(item)
+    option_knock_or_cave_generic(item)
 
 
 def cave_decision(item):
@@ -105,8 +100,6 @@ def knock_dagger():
 
     option_fight_or_flight_dagger()
 
-def option_knock_or_cave_sword():
-    print("hey girl")
 
 def option_fight_or_flight_dagger():
     fight_flight_dagger = int(input("Would you like to (1) fight or (2) run away?\n"))
@@ -136,17 +129,21 @@ def fight_dagger():
         input("What would you like to do?")
         # needs to do something.
 
+def knock_sword():
+    
 
 def flee_dagger():
     print("You run back into the field. Luckily, you don't seem to have been followed.\n")
     time.sleep(2)
 
-    option_knock_or_cave_dagger()
+    item = "dagger"
+
+    option_knock_or_cave_generic(item)
 
 
 #def game_restart():
 
-enemy_list = ["gorgon", "dragon", "wicked fairie"]
+enemy_list = ["gorgon", "dragon", "wicked fairie", "pirate"]
 enemy = random.choice(enemy_list)
 
 def main():
