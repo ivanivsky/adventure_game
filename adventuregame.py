@@ -123,18 +123,20 @@ def option_fight_or_flight_generic(item):
     item = item
     fight_or_flight = ""
 
-    while fight_or_flight != "1" and fight_or_flight != "2":
-        fight_or_flight = input("Would you like to (1) fight or (2) "
-                                    "run away?\n")
+    prompt = "Would you like to (1) fight or (2) run away?\n"
 
-        if fight_or_flight == "1" and item == "dagger":
-            fight_dagger()
-        elif fight_or_flight == "2":
-            flee_generic(item)
-        elif fight_or_flight == "1" and item == "sword":
-            fight_sword()
-        else:
-            True
+    options = ["1", "2"]
+
+    choice = validate_input(prompt, options)
+
+    if choice == "1" and item == "dagger":
+        fight_dagger()
+    elif choice == "2":
+        flee_generic(item)
+    elif choice == "1" and item == "sword":
+        fight_sword()
+    else:
+        True
 
 
 def fight_dagger():
@@ -172,29 +174,32 @@ def fight_sword():
 
     play_again()
 
-
-def flee_sword():
-    print("shouldn't get here")
+def validate_input(prompt, options):
+    while True:
+        response = input(prompt).lower()
+        for option in options:
+            if option == response:
+                return response
 
 
 def play_again():
+    prompt = "Would you like to play again? (y/n)\n"
 
-    play = ""
-    while play != "y" and play != "n":
-        play = input("Would you like to play again? (y/n)\n").lower()
+    options = ["y", "n"]
 
-        if play != "y" and play != "n":
-            play_again()
+    choice = validate_input(prompt, options)
 
-        if play == "y":
-            print("Excellent! Restarting the game ...")
-            intro_text()
-        elif play == "n":
-            print("Thanks for playing! See you next time.")
-        else:
-            True
+    print("You responded with: " + choice)
 
-#def game_restart():
+    if choice == "y":
+        print_pause("Excellent! Restarting the game ...")
+        intro_text()
+    elif choice == "n":
+        exit_game()
+
+def exit_game():
+        print_pause("Thanks for playing! See you next time.")
+        quit()
 
 
 enemy_list = ["gorgon", "dragon", "wicked fairie", "pirate"]
@@ -203,8 +208,6 @@ enemy = random.choice(enemy_list)
 
 def main():
     intro_text()
-    option_knock_or_cave_dagger()
-
 
 if __name__ == "__main__":
     main()
