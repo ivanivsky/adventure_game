@@ -3,6 +3,10 @@
 import random
 import time
 
+def enemy_generation():
+    enemy_list = ["gorgon", "dragon", "wicked fairie", "pirate"]
+    enemy = random.choice(enemy_list)
+    return enemy
 
 def print_pause(sentence):
     print(sentence)
@@ -12,6 +16,8 @@ def print_pause(sentence):
 def intro_text():
     print_pause("You find yourself standing in an open field, "
                 "filled with grass and yellow wildflowers.")
+
+
     print_pause(f"Rumor has it that a {enemy} is somewhere around here, "
                 "and has been terrifying the nearby village.")
     print_pause("In front of you is a house.")
@@ -21,36 +27,38 @@ def intro_text():
                 "(but not very effective) dagger.\n")
 
     item = "dagger"
-    option_knock_or_cave_generic(item)
+    put_knock_or_cave_options(item)
 
 
-def option_knock_or_cave_generic(item):
+def put_knock_or_cave_options(item):
     item = item
     print_pause("Enter 1 to knock on the door of the house.")
     print_pause("Enter 2 to peer into the cave.")
     print_pause("What would you like to do?")
 
-    decision_knock_or_cave_generic(item)
+    get_knock_or_cave_decision(item)
 
 
-def decision_knock_or_cave_generic(item):
+def get_knock_or_cave_decision(item):
 
     item = item
-    decision = None
 
-    while decision != "1" and decision != "2":
-        decision = input("(Please enter 1 or 2.)\n")
+    prompt = "(Please enter 1 or 2.)\n"
 
-        if item == "dagger" and decision == "1":
-            knock_dagger()
-        elif item == "dagger" and decision == "2":
-            cave_dagger()
-        elif item == "sword" and decision == "1":
-            knock_sword()
-        elif item == "sword" and decision == "2":
-            cave_sword()
-        else:
-            True
+    options = ["1", "2"]
+
+    choice = validate_input(prompt, options)
+
+    if item == "dagger" and choice == "1":
+        knock_dagger()
+    elif item == "dagger" and choice == "2":
+        cave_dagger()
+    elif item == "sword" and choice == "1":
+        knock_sword()
+    elif item == "sword" and choice == "2":
+        cave_sword()
+    else:
+        True
 
 
 def cave_dagger():
@@ -64,7 +72,7 @@ def cave_dagger():
 
     item = "sword"
 
-    option_knock_or_cave_generic(item)
+    _knock_or_cave_options(item)
 
 
 def cave_sword():
@@ -73,22 +81,7 @@ def cave_sword():
                 "It's just an empty cave now.\n")
 
     item = "sword"
-    option_knock_or_cave_generic(item)
-
-
-# def cave_decision(item):
-#     print_pause("You walk back out to the field.\n")
-#     print_pause("Enter 1 to knock on the door of the house.")
-#     print_pause("Enter 2 to peer into the cave.")
-#     print_pause("What would you like to do?")
-#     decision_sword = input("(Please enter 1 or 2.)\n")
-#
-#     if item == "dagger":
-#         cave_dagger()
-#     elif item == "sword":
-#         cave_sword()
-#     else:
-#         print("what is going on?")
+    put_knock_or_cave_options(item)
 
 
 def knock_dagger():
@@ -103,7 +96,7 @@ def knock_dagger():
     print_pause("You feel a bit under-prepared for this, what with "
                 "only having a tiny dagger.")
 
-    option_fight_or_flight_generic(item)
+    put_fight_or_flight_options(item)
 
 
 def knock_sword():
@@ -116,12 +109,11 @@ def knock_sword():
     print_pause(f"Eep! This is the {enemy}'s house!")
     print_pause(f"The {enemy} attacks you!")
 
-    option_fight_or_flight_generic(item)
+    put_fight_or_flight_options(item)
 
 
-def option_fight_or_flight_generic(item):
+def put_fight_or_flight_options(item):
     item = item
-    fight_or_flight = ""
 
     prompt = "Would you like to (1) fight or (2) run away?\n"
 
@@ -148,10 +140,13 @@ def fight_dagger():
 
 
 def flee_generic(item):
+
     item = item
+
     print_pause("You run back into the field. Luckily, "
                 "you don't seem to have been followed.\n")
-    option_knock_or_cave_generic(item)
+
+    put_knock_or_cave_options(item)
 
 
 def flee_dagger():
@@ -160,7 +155,7 @@ def flee_dagger():
 
     item = "dagger"
 
-    option_knock_or_cave_generic(item)
+    put_knock_or_cave_options(item)
 
 
 def fight_sword():
@@ -173,6 +168,7 @@ def fight_sword():
     print_pause(f"You have rid the town of the {enemy}. You are victorious!")
 
     play_again()
+
 
 def validate_input(prompt, options):
     while True:
@@ -189,25 +185,23 @@ def play_again():
 
     choice = validate_input(prompt, options)
 
-    print("You responded with: " + choice)
-
     if choice == "y":
         print_pause("Excellent! Restarting the game ...")
         intro_text()
     elif choice == "n":
         exit_game()
 
+
 def exit_game():
         print_pause("Thanks for playing! See you next time.")
         quit()
 
 
-enemy_list = ["gorgon", "dragon", "wicked fairie", "pirate"]
-enemy = random.choice(enemy_list)
+enemy = enemy_generation()
+intro_text()
 
+#def main():
 
-def main():
-    intro_text()
 
 if __name__ == "__main__":
     main()
