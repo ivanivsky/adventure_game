@@ -1,23 +1,26 @@
-
-
 import random
 import time
+
+
 
 def enemy_generation():
     enemy_list = ["gorgon", "dragon", "wicked fairie", "pirate"]
     enemy = random.choice(enemy_list)
     return enemy
+    print(f"in gen it's {enemy}")
 
 def print_pause(sentence):
     print(sentence)
     time.sleep(2)
 
 
-def intro_text():
+def start_game(item, enemy):
+
+    item = item
+    enemy = enemy
+
     print_pause("You find yourself standing in an open field, "
                 "filled with grass and yellow wildflowers.")
-
-
     print_pause(f"Rumor has it that a {enemy} is somewhere around here, "
                 "and has been terrifying the nearby village.")
     print_pause("In front of you is a house.")
@@ -26,22 +29,25 @@ def intro_text():
     print_pause("In your hand you hold your trusty "
                 "(but not very effective) dagger.\n")
 
-    item = "dagger"
-    put_knock_or_cave_options(item)
+    put_knock_or_cave_options(item, enemy)
 
 
-def put_knock_or_cave_options(item):
+def put_knock_or_cave_options(item, enemy):
+
     item = item
+    enemy = enemy
+
     print_pause("Enter 1 to knock on the door of the house.")
     print_pause("Enter 2 to peer into the cave.")
     print_pause("What would you like to do?")
 
-    get_knock_or_cave_decision(item)
+    get_knock_or_cave_decision(item, enemy)
 
 
-def get_knock_or_cave_decision(item):
+def get_knock_or_cave_decision(item, enemy):
 
     item = item
+    enemy = enemy
 
     prompt = "(Please enter 1 or 2.)\n"
 
@@ -50,18 +56,21 @@ def get_knock_or_cave_decision(item):
     choice = validate_input(prompt, options)
 
     if item == "dagger" and choice == "1":
-        knock_dagger()
-    elif item == "dagger" and choice == "2":
-        cave_dagger()
+        knock_dagger(item, enemy)
+    elif item  == "dagger" and choice == "2":
+        cave_dagger(item, enemy)
     elif item == "sword" and choice == "1":
-        knock_sword()
+        knock_sword(item, enemy)
     elif item == "sword" and choice == "2":
-        cave_sword()
+        cave_sword(item, enemy)
     else:
-        True
+        get_knock_or_cave_decision(item, enemy)
 
 
-def cave_dagger():
+def cave_dagger(item, enemy):
+
+    enemy = enemy
+
     print_pause("You peer cautiously into the cave.")
     print_pause("It turns out to be only a very small cave.")
     print_pause("Your eye catches a glint of metal behind a rock.")
@@ -72,21 +81,23 @@ def cave_dagger():
 
     item = "sword"
 
-    _knock_or_cave_options(item)
+    put_knock_or_cave_options(item, enemy)
 
 
-def cave_sword():
+def cave_sword(item, enemy):
+
+    item = item
+    enemy = enemy
+
     print_pause("You peer cautiously into the cave.")
     print_pause("You've been here before, and gotten all the good stuff. "
                 "It's just an empty cave now.\n")
 
-    item = "sword"
-    put_knock_or_cave_options(item)
+    put_knock_or_cave_options(item, enemy)
 
 
-def knock_dagger():
+def knock_dagger(item, enemy):
 
-    item = "dagger"
 
     print_pause("You approach the door of the house.")
     print_pause("You are about to knock when the door opens and "
@@ -96,12 +107,13 @@ def knock_dagger():
     print_pause("You feel a bit under-prepared for this, what with "
                 "only having a tiny dagger.")
 
-    put_fight_or_flight_options(item)
+    put_fight_or_flight_options(item, enemy)
 
 
-def knock_sword():
+def knock_sword(item, enemy):
 
-    item = "sword"
+    item = item
+    enemy = enemy
 
     print_pause("You approach the door of the house.")
     print_pause("You are about to knock when the door opens "
@@ -109,11 +121,13 @@ def knock_sword():
     print_pause(f"Eep! This is the {enemy}'s house!")
     print_pause(f"The {enemy} attacks you!")
 
-    put_fight_or_flight_options(item)
+    put_fight_or_flight_options(item, enemy)
 
 
-def put_fight_or_flight_options(item):
+def put_fight_or_flight_options(item, enemy):
+
     item = item
+    enemy = enemy
 
     prompt = "Would you like to (1) fight or (2) run away?\n"
 
@@ -122,16 +136,20 @@ def put_fight_or_flight_options(item):
     choice = validate_input(prompt, options)
 
     if choice == "1" and item == "dagger":
-        fight_dagger()
+        fight_dagger(item, enemy)
     elif choice == "2":
-        flee_generic(item)
+        flee_generic(item, enemy)
     elif choice == "1" and item == "sword":
-        fight_sword()
+        fight_sword(item, enemy)
     else:
-        True
+        put_fight_or_flight_options(item, enemy)
 
 
-def fight_dagger():
+def fight_dagger(item, enemy):
+
+    item = item
+    enemy = enemy
+
     print_pause("You do your best...")
     print_pause(f"but your dagger is no match for the {enemy}.")
     print_pause("You have been defeated!")
@@ -139,26 +157,33 @@ def fight_dagger():
     play_again()
 
 
-def flee_generic(item):
+def flee_generic(item, enemy):
 
+    enemy = enemy
     item = item
 
     print_pause("You run back into the field. Luckily, "
                 "you don't seem to have been followed.\n")
 
-    put_knock_or_cave_options(item)
+    put_knock_or_cave_options(item, enemy)
 
 
-def flee_dagger():
+def flee_dagger(item, enemy):
+
+    item = item
+    enemy = enemy
+
     print_pause("You run back into the field. Luckily, "
                 "you don't seem to have been followed.\n")
 
-    item = "dagger"
-
-    put_knock_or_cave_options(item)
+    put_knock_or_cave_options(item, enemy)
 
 
-def fight_sword():
+def fight_sword(item, enemy):
+
+    item = item
+    enemy = enemy
+
     print_pause(f"As the {enemy} moves to attack, "
                 "you unsheath your new sword.")
     print_pause("The Sword of Ogoroth shines brightly in your hand "
@@ -187,7 +212,7 @@ def play_again():
 
     if choice == "y":
         print_pause("Excellent! Restarting the game ...")
-        intro_text()
+        play_game()
     elif choice == "n":
         exit_game()
 
@@ -196,12 +221,12 @@ def exit_game():
         print_pause("Thanks for playing! See you next time.")
         quit()
 
+def play_game():
+    item = "dagger"
+    enemy = enemy_generation()
+    start_game(item, enemy)
 
-enemy = enemy_generation()
-intro_text()
-
-#def main():
-
+play_game()
 
 if __name__ == "__main__":
     main()
