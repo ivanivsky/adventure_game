@@ -2,12 +2,12 @@ import random
 import time
 
 
-
 def enemy_generation():
     enemy_list = ["gorgon", "dragon", "wicked fairie", "pirate"]
     enemy = random.choice(enemy_list)
     return enemy
     print(f"in gen it's {enemy}")
+
 
 def print_pause(sentence):
     print(sentence)
@@ -57,7 +57,7 @@ def get_knock_or_cave_decision(item, enemy):
 
     if item == "dagger" and choice == "1":
         knock_dagger(item, enemy)
-    elif item  == "dagger" and choice == "2":
+    elif item == "dagger" and choice == "2":
         cave_dagger(item, enemy)
     elif item == "sword" and choice == "1":
         knock_sword(item, enemy)
@@ -97,7 +97,6 @@ def cave_sword(item, enemy):
 
 
 def knock_dagger(item, enemy):
-
 
     print_pause("You approach the door of the house.")
     print_pause("You are about to knock when the door opens and "
@@ -218,13 +217,15 @@ def play_again():
 
 
 def exit_game():
-        print_pause("Thanks for playing! See you next time.")
-        quit()
+    print_pause("Thanks for playing! See you next time.")
+    quit()
+
 
 def play_game():
     item = "dagger"
     enemy = enemy_generation()
     start_game(item, enemy)
+
 
 play_game()
 
